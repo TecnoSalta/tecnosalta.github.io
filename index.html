@@ -57,6 +57,7 @@
       background: var(--neutral-bg);
       color: var(--text-light);
       transition: var(--transition);
+      overflow-x: hidden;
     }
     body {
       min-height: 100vh;
@@ -64,17 +65,47 @@
       flex-direction: column;
     }
 
+    /* Background decorativo que cubre toda la página */
+    .mist-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      transition: opacity .4s ease;
+    }
+    
+    /* Tema LIGHT → amanecer suave */
+    [data-theme="light"] .mist-bg {
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255, 210, 210, .45) 0%, transparent 60%),
+        radial-gradient(circle at 50% 0%, rgba(255, 225, 200, .35) 0%, transparent 70%),
+        radial-gradient(circle at 50% 0%, rgba(200, 220, 255, .25) 0%, transparent 80%);
+    }
+    
+    [data-theme="dark"] .mist-bg {
+      background:
+        radial-gradient(circle at 50% 100%, rgba(70, 85, 110, .5) 0%, transparent 60%),
+        radial-gradient(circle at 50% 100%, rgba(99, 102, 241, .4) 0%, transparent 70%),
+        radial-gradient(circle at 50% 100%, rgba(181, 184, 208, .3) 0%, transparent 80%);
+    }
+
+    /* Asegura que todo el contenido esté por encima del background */
+    body > *:not(.mist-bg) {
+      position: relative;
+      z-index: 1;
+    }
+
     /* Navbar Styles - Migrado del componente React */
     .navbar {
       width: 100%;
       padding: 1.5rem 0;
-      background: var(--neutral-bg);
+      background: transparent;
       transition: var(--transition);
     }
     .navbar-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 1rem;
+      padding: 0 0.75rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -90,6 +121,10 @@
       transition: var(--transition);
       color: var(--text-light);
       text-decoration: none;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     [data-theme="dark"] .navbar-brand {
       color: var(--text-dark);
@@ -108,7 +143,9 @@
     .navbar-social {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.25rem;
+      flex-shrink: 1;
+      flex-wrap: wrap;
     }
     .navbar-social-links {
       display: flex;
@@ -189,28 +226,6 @@
       opacity: 1;
       transform: translate(-50%,-50%) scale(1);
     }
-    .mist-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      transition: opacity .4s ease;
-    }
-    
-    /* Tema LIGHT → amanecer suave */
-    [data-theme="light"] .mist-bg {
-      background:
-        radial-gradient(circle at 50% 0%, rgba(255, 210, 210, .45) 0%, transparent 60%),
-        radial-gradient(circle at 50% 0%, rgba(255, 225, 200, .35) 0%, transparent 70%),
-        radial-gradient(circle at 50% 0%, rgba(200, 220, 255, .25) 0%, transparent 80%);
-    }
-    
-    [data-theme="dark"] .mist-bg {
-      background:
-        radial-gradient(circle at 50% 100%, rgba(70, 85, 110, .5) 0%, transparent 60%),
-        radial-gradient(circle at 50% 100%, rgba(99, 102, 241, .4) 0%, transparent 70%),
-        radial-gradient(circle at 50% 100%, rgba(181, 184, 208, .3) 0%, transparent 80%);
-    }
     
     header {
       position: relative;
@@ -220,44 +235,7 @@
       border-radius: 0 0 var(--radius) var(--radius);
       box-shadow: var(--shadow);
       transition: var(--transition);
-      overflow: hidden;   /* evita que el radial sobresalga */
-    }
-
-    /* Responsive navbar */
-    @media (min-width: 640px) {
-      .navbar-container {
-        justify-content: space-around;
-        padding: 0 1.5rem;
-      }
-      .navbar-brand {
-        gap: 0.375rem;
-        font-size: 1.25rem;
-      }
-      .navbar-logo {
-        width: 1.5rem;
-        height: 1.5rem;
-      }
-      .navbar-social-links {
-        gap: 1rem;
-      }
-      .navbar-social-link {
-        padding: 0.5rem;
-      }
-      .navbar-social-icon {
-        width: 1.5rem;
-        height: 1.5rem;
-      }
-    }
-
-    /* Header styles - simplified */
-    header {
-      color: var(--text-dark);
-      padding: 2rem 1rem 1.2rem 1rem;
-      text-align: center;
-      border-radius: 0 0 var(--radius) var(--radius);
-      box-shadow: var(--shadow);
-      position: relative;
-      transition: var(--transition);
+      background: transparent;
     }
 
     /* Language button - moved to navbar area */
@@ -432,12 +410,39 @@
       box-shadow: var(--shadow);
       margin-top: 2rem;
     }
+
+    /* Responsive navbar */
+    @media (min-width: 640px) {
+      .navbar-container {
+        justify-content: space-around;
+        padding: 0 1.5rem;
+      }
+      .navbar-brand {
+        gap: 0.375rem;
+        font-size: 1.25rem;
+      }
+      .navbar-logo {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+      .navbar-social-links {
+        gap: 1rem;
+      }
+      .navbar-social-link {
+        padding: 0.5rem;
+      }
+      .navbar-social-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+      .navbar-social {
+        gap: 0.75rem;
+      }
+    }
+
     @media (max-width: 768px) {
-      html, body {
-          overflow-x: hidden; 
-          width: 100%;}
       .navbar-container,
-        main,
+      main,
       .profile-block {
         padding-left: 0.75rem;
         padding-right: 0.75rem;
@@ -525,58 +530,25 @@
         padding: 0.35rem 0.8rem;
       }
     }
-    /* 1. Evita el scroll horizontal global */
-    body {
-      overflow-x: hidden;
-    }
-    
-    .navbar-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1200px;
-      margin: 0 auto;
-      /* padding reducido en móvil y escalable después de 640 px */
-      padding: 0 0.75rem;        /* móvil */
-    }
-    @media (min-width: 640px) {
-      .navbar-container {
-        padding: 0 1.5rem;       /* versión grande */
-      }
-    }
-    
-    .navbar-social {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;              /* separación mínima entre iconos */
-      flex-shrink: 1;
-      flex-wrap: wrap;           /* salto de línea si no caben */
-    }
-    
-    .navbar-brand {
-      min-width: 0;              /* permite que el flex-item se reduzca */
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
   </style>
 </head>
 <body>
+  <!-- Background decorativo que cubre toda la página -->
+  <div id="mist-bg" class="mist-bg"></div>
+
   <header role="banner">
-    <div id="mist-bg" class="mist-bg"></div>
-  
     <nav class="navbar" role="navigation">
       <div class="navbar-container">
         <div class="navbar-brand">
           <span class="navbar-brand-text">Portfolio</span>
         </div>
-  
+
         <div class="navbar-social">
           <button class="lang-btn" id="lang-btn" aria-label="Cambiar idioma">
             <img id="lang-flag" class="flag" src="https://flagcdn.com/ar.svg" alt="Español"/>
             <span class="lang-label" id="lang-label">Español</span>
           </button>
-  
+
           <button class="navbar-theme-toggle" id="theme-toggle-btn" aria-label="Cambiar tema claro/oscuro">
             <i class="fas fa-sun"></i>
             <i class="fas fa-moon"></i>
@@ -585,6 +557,7 @@
       </div>
     </nav>
   </header>
+
   <main id="main-content" role="main">
     <section class="profile-block" aria-labelledby="profile-heading">
       <img src="profile.png" alt="Foto de David Méndez" class="profile-avatar" id="profile-avatar" onerror="this.src='https://placehold.co/110x110?text=DM';">
