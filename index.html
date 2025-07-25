@@ -205,7 +205,6 @@
         radial-gradient(circle at 50% 0%, rgba(200, 220, 255, .25) 0%, transparent 80%);
     }
     
-    /* Tema DARK → medianoche (tu original) */
     [data-theme="dark"] .mist-bg {
       background:
         radial-gradient(circle at 50% 100%, rgba(70, 85, 110, .5) 0%, transparent 60%),
@@ -213,7 +212,6 @@
         radial-gradient(circle at 50% 100%, rgba(181, 184, 208, .3) 0%, transparent 80%);
     }
     
-    /* 3. Asegura que el header tenga posición relativa para que .mist-bg se ancle */
     header {
       position: relative;
       color: var(--text-dark);
@@ -532,7 +530,6 @@
       overflow-x: hidden;
     }
     
-    /* 2. Ajusta el contenedor de la navbar para que no crezca más allá del viewport */
     .navbar-container {
       display: flex;
       align-items: center;
@@ -548,7 +545,6 @@
       }
     }
     
-    /* 3. Permite que los botones se apilen si el ancho es muy justo */
     .navbar-social {
       display: flex;
       align-items: center;
@@ -557,7 +553,6 @@
       flex-wrap: wrap;           /* salto de línea si no caben */
     }
     
-    /* 4. Hace que el texto de la marca corte con “…” si falta espacio */
     .navbar-brand {
       min-width: 0;              /* permite que el flex-item se reduzca */
       white-space: nowrap;
