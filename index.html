@@ -485,6 +485,15 @@
         padding: 0.35rem 0.8rem;
       }
     }
+    /* kill horizontal scroll once and for all */
+body {
+  overflow-x: hidden;
+}
+
+/* navbar can shrink and wrap if necessary */
+.navbar-container {
+  flex-wrap: wrap;
+}
   </style>
 </head>
 <body>
