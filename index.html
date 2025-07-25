@@ -485,15 +485,43 @@
         padding: 0.35rem 0.8rem;
       }
     }
-    /* kill horizontal scroll once and for all */
-body {
-  overflow-x: hidden;
-}
-
-/* navbar can shrink and wrap if necessary */
-.navbar-container {
-  flex-wrap: wrap;
-}
+    /* 1. Evita el scroll horizontal global */
+    body {
+      overflow-x: hidden;
+    }
+    
+    /* 2. Ajusta el contenedor de la navbar para que no crezca más allá del viewport */
+    .navbar-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      /* padding reducido en móvil y escalable después de 640 px */
+      padding: 0 0.75rem;        /* móvil */
+    }
+    @media (min-width: 640px) {
+      .navbar-container {
+        padding: 0 1.5rem;       /* versión grande */
+      }
+    }
+    
+    /* 3. Permite que los botones se apilen si el ancho es muy justo */
+    .navbar-social {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;              /* separación mínima entre iconos */
+      flex-shrink: 1;
+      flex-wrap: wrap;           /* salto de línea si no caben */
+    }
+    
+    /* 4. Hace que el texto de la marca corte con “…” si falta espacio */
+    .navbar-brand {
+      min-width: 0;              /* permite que el flex-item se reduzca */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   </style>
 </head>
 <body>
