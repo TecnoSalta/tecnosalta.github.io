@@ -400,11 +400,18 @@
       margin-top: 2rem;
     }
     @media (max-width: 768px) {
+      html, body {
+          overflow-x: hidden; 
+          width: 100%;}
+      .navbar-container,
+        main,
+      .profile-block {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        box-sizing: border-box;
+      }
       .navbar {
         padding: 1rem 0;
-      }
-      .navbar-container {
-        padding: 0 1rem;
       }
       .navbar-brand {
         font-size: 1.125rem;
